@@ -29,6 +29,7 @@ import android.widget.ImageView;
 
 import org.kymjs.kjframe.bitmap.BitmapCallBack;
 import org.kymjs.kjframe.bitmap.BitmapConfig;
+import org.kymjs.kjframe.bitmap.BitmapMemoryCache;
 import org.kymjs.kjframe.bitmap.DiskImageRequest;
 import org.kymjs.kjframe.bitmap.ImageDisplayer;
 import org.kymjs.kjframe.http.Cache;
@@ -50,7 +51,7 @@ import java.util.HashSet;
 /**
  * The BitmapLibrary's core classes<br>
  * <b>创建时间</b> 2014-6-11<br>
- * <b>最后修改</b> 2015-9-25<br>
+ * <b>最后修改</b> 2015-12-16<br>
  *
  * @author kymjs (https://github.com/kymjs)
  * @version 2.4
@@ -76,6 +77,7 @@ public class KJBitmap {
     public KJBitmap(KJHttp kjHttp, BitmapConfig bitmapConfig) {
         if (kjHttp == null) kjHttp = new KJHttp();
         if (bitmapConfig == null) bitmapConfig = new BitmapConfig();
+        if (BitmapConfig.mMemoryCache == null) BitmapConfig.mMemoryCache = new BitmapMemoryCache();
         displayer = new ImageDisplayer(kjHttp, bitmapConfig);
     }
 
@@ -162,6 +164,10 @@ public class KJBitmap {
             return this;
         }
 
+        /**
+         * 推荐使用display(kjbitmap)
+         */
+        @Deprecated
         public void display() {
             display(new KJBitmap(httpConfig, bitmapConfig));
         }
